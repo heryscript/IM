@@ -22,6 +22,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .authorities(user.getRoles().stream().map(Role::getName).toArray(String[]::new))
+                .disabled(!user.isEnabled())                   // vérifie si le compte est activé
+                .accountExpired(false)                         // à adapter si tu gères ça
+                .credentialsExpired(false)                     // idem
                 .build();
+
     }
 }
