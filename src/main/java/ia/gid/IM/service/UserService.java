@@ -43,8 +43,8 @@ public class UserService {
         verificationToken.setExpiryDate(LocalDateTime.now().plusDays(1));
         tokenRepository.save(verificationToken);
 
-        String link = "http://localhost:8080/api/auth/verify?token=" + token;
-        emailService.send(user.getEmail(), "Vérifie ton email ici : " + link);
+//        String link = "http://localhost:8080/api/auth/verify?token=" + token;
+        emailService.send(user.getEmail(), "Votre code de verification : " + token);
 
         return savedUser;
     }
