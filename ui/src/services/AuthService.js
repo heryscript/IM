@@ -26,7 +26,7 @@ class AuthService{
 
     async verifyEmail(token){
         try{
-            const response = await api.post("users/verify", token);
+            const response = await api.get("users/verify/" + token);
             const data = await response.data;
             return data;
         }

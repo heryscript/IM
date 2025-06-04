@@ -17,8 +17,8 @@ public class UserController {
         return ResponseEntity.ok(userService.registerUser(user));
     }
 
-    @PostMapping("/verify")
-    public ResponseEntity<String> verifyUserEmail(@RequestBody String token) {
+    @GetMapping("/verify/{token}")
+    public ResponseEntity<String> verifyUserEmail(@PathVariable("token") String token) {
         try {
             String message = userService.verifyEmail(token);
             return ResponseEntity.ok(message);
