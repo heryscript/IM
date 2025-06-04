@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
 import AuthService from '../services/AuthService';
-import Notifier from '../components/Notifier';
 import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
@@ -10,31 +9,14 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const [notif, setNotif] = useState({
-    open: false,
-    message:'',
-    severity:'success'
-  })
-
-  const handleCloseNotif = (event, reason) => {
-    if (reason === 'clickaway') return;
-    setNotif({ ...notif, open: false });
-  };
-
   const handleRegister = (e) => {
     e.preventDefault();
     const authRequest = { name, email, password}
     AuthService.register(authRequest)
       .then(res => {
-        setNotif({ open: true, message: 'Utilisateur enregistré avec succès !', severity: 'success' });
-        
-        // attendre 1.5 seconde avant de rediriger
-        setTimeout(() => {
-          navigate('/verify-email');
-        }, 3000);
+        navigate('/verify-email');
       })
       .catch(err => {
-        setNotif({ open: true, message: "Erreur lors de l'inscription", severity: 'error' });
         console.error('Erreur inscription', err);
       });
   };
@@ -75,12 +57,6 @@ const Register = () => {
           S'inscrire
         </Button>
       </Box>
-      <Notifier
-        open={notif.open}
-        message={notif.message}
-        severity={notif.severity}
-        onClose={handleCloseNotif}
-      />
     </Container>
   );
 };
