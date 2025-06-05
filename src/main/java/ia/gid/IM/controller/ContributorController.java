@@ -1,7 +1,9 @@
 package ia.gid.IM.controller;
 
 import ia.gid.IM.entity.Contributor;
+import ia.gid.IM.entity.User;
 import ia.gid.IM.service.ContributorService;
+import ia.gid.IM.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +14,19 @@ import java.util.List;
 @RequestMapping("/api/contributors")
 public class ContributorController {
     private final ContributorService contributorService;
+    private final UserService userService;
 
     @GetMapping
     public List<Contributor> contributors() {
         return contributorService.findAll();
     }
+
+    @GetMapping("/all")
+    public List<Contributor> getContributorsForCurrentUser() {
+        User user = userService.getCurrentUser(); // depuis UserService
+        return contributorService.getContributorsByUser(user.getId());
+    }
+
 
     @GetMapping("{contributorId}")
     public Contributor contributor(@PathVariable("contributorId") long contributorId) {
@@ -25,6 +35,8 @@ public class ContributorController {
 
     @PostMapping
     public Contributor createContributor(@RequestBody Contributor contributor) {
+        User user = userService.getCurrentUser();
+        contributor.setUser(user);
         return contributorService.save(contributor);
     }
 

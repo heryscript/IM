@@ -25,6 +25,10 @@ public class Contributor {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @ManyToMany
     @JoinTable(
             name = "contributor_packages",

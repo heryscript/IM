@@ -7,10 +7,13 @@ import ia.gid.IM.repository.RoleRepository;
 import ia.gid.IM.repository.TokenRepository;
 import ia.gid.IM.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -70,5 +73,16 @@ public class UserService {
 
         return "Compte activé !";
     }
+
+    public User getCurrentUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
 
 }
