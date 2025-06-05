@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import ContributeurChart from './ContributeurChart.jsx';
-import axios from 'axios';
+import UserService from '../services/UserService.js';
 
 function CardDashboard() {
   const [data, setData] = useState({
@@ -11,20 +11,24 @@ function CardDashboard() {
   });
 
   useEffect(() => {
-    axios.get('/api/users')
-    .then((response) => {
-      setData(response.data);
-    })
-    .catch((error) => {
-      console.log("erreur lors du chargement des données : ", error);
-    });
+    handleFetchUsers();
   }, []);
+
+  const handleFetchUsers = async() =>{
+    UserService.findAll()
+      .then(res => {
+        console.log("Users fetched successfully:", res);
+      })
+      .catch(err => {
+        console.error("Error fetching users:", err);
+    });
+  }
 
 
   const cards = [
     { title: 'Contributeurs', value: '1 254' },
     { title: 'Packages', value: '124' },
-    { title: 'Utilisateurs', value: '3' },
+    { title: 'Utilisateurs', value: "6" },
   ];
 
   return (
