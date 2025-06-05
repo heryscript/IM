@@ -11,7 +11,7 @@ function CardDashboard() {
   });
 
   useEffect(() => {
-    axios.get('/api/users')
+    axios.get('/api/users/utilisateurs')
     .then((response) => {
       setData(response.data);
     })

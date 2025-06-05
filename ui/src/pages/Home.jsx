@@ -24,7 +24,7 @@ const Home = () => {
       >
         <Container>
           <Typography variant="h3" gutterBottom>
-            Bienvenue sur notre plateforme
+            Bienvenue sur notre plateforme Youdentity
           </Typography>
           <Typography variant="h6" color="text.secondary" gutterBottom>
             Créez un compte ou connectez-vous pour commencer
