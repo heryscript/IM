@@ -1,4 +1,4 @@
-package ia.gid.IM.connector;
+package ia.gid.IM.connector.it;
 
 import ia.gid.IM.entity.Contributor;
 import lombok.RequiredArgsConstructor;
@@ -40,4 +40,33 @@ public class GitLabConnector {
 
         restTemplate.postForEntity(apiUrl, request, String.class);
     }
+
+    public void deprovision(Contributor contributor) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("PRIVATE-TOKEN", gitlabToken);
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // 1. Recherche l'utilisateur par email pour récupérer l'ID
+        String searchUrl = gitlabUrl + "/api/v4/users?search=" + contributor.getEmail();
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        ResponseEntity<Contributor[]> response = restTemplate.exchange(
+                searchUrl, HttpMethod.GET, requestEntity, Contributor[].class);
+
+        Contributor[] users = response.getBody();
+
+        if (users == null || users.length == 0) {
+            throw new IllegalArgumentException("Utilisateur GitLab non trouvé pour l'email : " + contributor.getEmail());
+        }
+
+        // Supposons que le premier utilisateur est le bon
+        Long userId = users[0].getId();
+
+        // 2. Supprime l'utilisateur par ID
+        String deleteUrl = gitlabUrl + "/api/v4/users/" + userId;
+
+        restTemplate.exchange(deleteUrl, HttpMethod.DELETE, requestEntity, Void.class);
+    }
+
 }

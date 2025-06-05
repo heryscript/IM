@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProvisioningController {
     private final ProvisioningService provisioningService;
 
-    @PostMapping("/{contributorId}/provision/github")
+    @PostMapping("/github/{contributorId}")
     public void provisionGitHub(@PathVariable Long contributorId) {
         provisioningService.provisionGitHub(contributorId);
     }
 
-    @PostMapping("/{contributorId}/provision/gitlab")
+    @PostMapping("/gitlab/{contributorId}")
     public void provisionGitLab(@PathVariable Long contributorId) {
         provisioningService.provisionGitLab(contributorId);
     }
