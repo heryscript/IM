@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, Typography } from '@mui/material';
 import ContributeurChart from './ContributeurChart.jsx';
+import axios from 'axios';
 
 function CardDashboard() {
+  const [data, setData] = useState({
+    contributeurs : 0,
+    packages: 0,
+    utilisateurs : 0,
+  });
+
+  useEffect(() => {
+    axios.get('/api/users')
+    .then((response) => {
+      setData(response.data);
+    })
+    .catch((error) => {
+      console.log("erreur lors du chargement des données : ", error);
+    });
+  }, []);
+
+
   const cards = [
     { title: 'Contributeurs', value: '1 254' },
     { title: 'Packages', value: '124' },

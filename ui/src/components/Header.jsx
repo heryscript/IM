@@ -28,7 +28,7 @@ const Header = () => {
                 component="div"
                 onClick={() => navigate('/')}
                 sx={{ flexGrow: 1, cursor: 'pointer' }}>
-                    IM
+                    Youdentity
             </Typography>
             {isAuthenticated && !isLoginPage &&(
               <Button variant="contained" onClick={handleLogout}>Se déconnecter</Button>
