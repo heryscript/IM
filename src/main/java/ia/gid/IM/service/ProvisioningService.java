@@ -1,7 +1,7 @@
 package ia.gid.IM.service;
 
-import ia.gid.IM.connector.GitHubConnector;
-import ia.gid.IM.connector.GitLabConnector;
+import ia.gid.IM.connector.it.GitHubConnector;
+import ia.gid.IM.connector.it.GitLabConnector;
 import ia.gid.IM.entity.Contributor;
 import ia.gid.IM.repository.ContributorRepository;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +40,20 @@ public class ProvisioningService {
     public void provisionGitLab(Long contributorId) {
         Contributor contributor = contributorRepository.findById(contributorId).orElseThrow();
         gitLabConnector.provision(contributor);
+    }
+
+    public void deprovisionAll(Long contributorId) {
+        Contributor contributor = contributorRepository.findById(contributorId).orElseThrow();
+        Set<String> allConnecteurs = contributor.getPackages().stream()
+                .flatMap(p -> p.getConnecteurs().stream())
+                .collect(Collectors.toSet());
+
+        for (String connector : allConnecteurs) {
+            switch (connector.toLowerCase()) {
+                case "github" -> gitHubConnector.deprovision(contributor);
+                case "gitlab" -> gitLabConnector.deprovision(contributor);
+                default -> throw new IllegalArgumentException("Connecteur inconnu: " + connector);
+            }
+        }
     }
 }
