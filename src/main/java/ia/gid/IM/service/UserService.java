@@ -24,6 +24,9 @@ public class UserService {
     private final EmailService emailService;
 
     public User registerUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new IllegalArgumentException("Email déjà utilisé.");
+        }
 //       DESACTIVER LE COMPTE USER
         user.setEnabled(false);
 

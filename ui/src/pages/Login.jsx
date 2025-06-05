@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Container, TextField, Button, Typography, Box } from '@mui/material';
+import { Container, TextField, Button, Typography, Box, Snackbar, Alert } from '@mui/material';
 import AuthService from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [alertOpen, setAlertOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -14,16 +16,29 @@ const Login = () => {
     AuthService.login(authRequest)
       .then(res => {
         localStorage.setItem('token', res.token); // Stocke le token dans le localStorage
-        console.log('Connexion réussie', res.token);
+        setErrorMessage('');
+        setAlertOpen(false);
         navigate('/dashboard'); // Redirige vers la page d'accueil après connexion
       })
       .catch(err => {
-        console.error('Erreur connexion', err);
+        const message =  err.response?.data?.message || 'Erreur de connexion';
+        setErrorMessage(message);
+        setAlertOpen(true);
       });
   };
 
+    const handleCloseAlert = (_, reason) => {
+      if (reason === 'clickaway') return;
+      setAlertOpen(false);
+    };
+
   return (
     <Container maxWidth="xs">
+      <Snackbar open={alertOpen} autoHideDuration={6000} onClose={handleCloseAlert}>
+        <Alert severity="error" onClose={handleCloseAlert} sx={{ width: '100%' }}>
+          {errorMessage}
+        </Alert>
+      </Snackbar>
       <Box component="form" sx={{ boxShadow: 3, p: 8, bgcolor: 'white', mt: 8 }} onSubmit={handleLogin}>
         <Typography variant="h5" gutterBottom>Formulaire de connexion</Typography>
         <TextField
@@ -49,6 +64,7 @@ const Login = () => {
           Se connecter
         </Button>
       </Box>
+
     </Container>
   );
 };
