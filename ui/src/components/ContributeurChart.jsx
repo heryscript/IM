@@ -7,19 +7,19 @@ import {
 } from '@mui/material';
 
 const data = [
-  { name: 'Actifs', value: 60 },
-  { name: 'En attente', value: 25 },
-  { name: 'Partis', value: 15 },
+  { name: 'Actifs', value: 1 },
+  { name: 'En attente', value: 2 },
+  { name: 'Partis', value: 1 },
 ];
 
 const COLORS = ['#4caf50', '#ff9800', '#f44336'];
 
 const rows = [
-  { nom: 'Alice', statut: 'Actif' },
-  { nom: 'Bob', statut: 'En attente' },
-  { nom: 'Charlie', statut: 'Parti' },
-  { nom: 'David', statut: 'Actif' },
-  { nom: 'Emma', statut: 'En attente' },
+  { nom: 'monicarandria@gmail.com', poste: 'RH',statut: 'Actif' },
+  { nom: 'ericnomenjanahary11@gmail.com', poste:"Developpeur Java", statut: 'En attente' },
+  { nom: 'fanasinjaka18@gmail.com', poste:"Developpeur IA", statut: 'Parti' },
+  { nom: 'Tirindrafale@gmail.com',poste:"Integrateur", statut: 'Actif' },
+  { nom: 'Emma78@gmail.com',poste:"Assistante" ,statut: 'En attente' },
 ];
 
 const ContributeurChart = () => {
@@ -39,8 +39,9 @@ const ContributeurChart = () => {
             <TableHead>
               <TableRow>
                 <TableCell><strong>Email</strong></TableCell>
-                <TableCell><strong>Poste</strong></TableCell>
                 <TableCell><strong>Statut</strong></TableCell>
+                <TableCell><strong>Poste</strong></TableCell>   
+                
               </TableRow>
             </TableHead>
             <TableBody>
@@ -48,6 +49,7 @@ const ContributeurChart = () => {
                 <TableRow key={index}>
                   <TableCell>{row.nom}</TableCell>
                   <TableCell>{row.statut}</TableCell>
+                  <TableCell>{row.poste}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

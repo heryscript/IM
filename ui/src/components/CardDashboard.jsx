@@ -10,10 +10,8 @@ function CardDashboard() {
     utilisateurs : 0,
   });
 
-  useEffect(() => {
-<<<<<<< HEAD
+ /* useEffect(() => {
     handleFetchUsers();
-=======
     axios.get('/api/users/utilisateurs')
     .then((response) => {
       setData(response.data);
@@ -21,8 +19,7 @@ function CardDashboard() {
     .catch((error) => {
       console.log("erreur lors du chargement des données : ", error);
     });
->>>>>>> 24f4791a3aea2d5044c11421c1bdb84f44ebce99
-  }, []);
+  }, []);*/
 
   const handleFetchUsers = async() =>{
     UserService.findAll()

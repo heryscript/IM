@@ -7,6 +7,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import CardDashboard from '../components/CardDashboard.jsx';
+import ContributeurTable from '../components/ContributeurTable.jsx';
 const drawerWidth = 200;
 
 function Dashboard() {
@@ -22,11 +23,11 @@ function Dashboard() {
             <CardDashboard/>
           </>
         );
-      case 'Utilisateurs':
+      case 'Fonctionnalités':
         return (
           <>
-            <Typography variant="h4" gutterBottom>Utilisateurs</Typography>
-            <Typography>Gestion des utilisateurs.</Typography>
+            <Typography variant="h4" gutterBottom>Fonctionnalités</Typography>
+            <ContributeurTable/>
           </>
         );
       case 'Statistiques':
@@ -62,7 +63,7 @@ function Dashboard() {
           <List>
             {[
               { text: 'Dashboard', icon: <DashboardIcon /> },
-              { text: 'Utilisateurs', icon: <PeopleIcon /> },
+              { text: 'Fonctionnalités', icon: <PeopleIcon /> },
               { text: 'Statistiques', icon: <BarChartIcon /> },
             ].map((item) => (
               <ListItem 
