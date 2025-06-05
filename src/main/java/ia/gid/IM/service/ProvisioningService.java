@@ -7,6 +7,9 @@ import ia.gid.IM.repository.ContributorRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ProvisioningService {
@@ -14,10 +17,19 @@ public class ProvisioningService {
     private final GitLabConnector gitLabConnector;
     private final ContributorRepository contributorRepository;
 
-    public void provisionAll(Long contributorId) {
+    public void provisionAll(Long contributorId) throws IllegalStateException {
         Contributor contributor = contributorRepository.findById(contributorId).orElseThrow();
-        gitHubConnector.provision(contributor);
-        gitLabConnector.provision(contributor);
+        Set<String> allconnectors = contributor.getPackages().stream()
+                .flatMap(packageProvision -> packageProvision.getConnecteurs().stream())
+                .collect(Collectors.toSet());
+
+        for(String connector : allconnectors) {
+            switch (connector.toLowerCase()){
+                case "gitlab": provisionGitLab(contributorId);
+                case "github": provisionGitHub(contributorId);
+                default: throw new IllegalStateException("connecteur inconnue");
+            }
+        }
     }
 
     public void provisionGitHub(Long contributorId) {

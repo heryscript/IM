@@ -1,10 +1,9 @@
 package ia.gid.IM.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,4 +16,12 @@ public class Contributor {
     private String email;
     private String function;
     private String organisation;
+
+    @ManyToMany
+    @JoinTable(
+            name = "contributor_packages",
+            joinColumns = @JoinColumn(name = "contributor_id"),
+            inverseJoinColumns = @JoinColumn(name = "package_id")
+    )
+    private Set<PackageProvision> packages;
 }

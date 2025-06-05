@@ -33,6 +33,7 @@ public class ContributorController {
         return contributorService.update(contributorId, contributor);
     }
 
+    @DeleteMapping("{contributorId}")
     public void deleteContributor(@PathVariable("contributorId") long contributorId) {
         contributorService.delete(contributorId);
     }
