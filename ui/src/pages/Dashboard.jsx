@@ -23,10 +23,10 @@ function Dashboard() {
             <CardDashboard/>
           </>
         );
-      case 'Fonctionnalités':
+      case 'Contributeurs':
         return (
           <>
-            <Typography variant="h4" gutterBottom>Fonctionnalités</Typography>
+            <Typography variant="h4" gutterBottom>Contributeurs</Typography>
             <ContributeurTable/>
           </>
         );
@@ -63,7 +63,7 @@ function Dashboard() {
           <List>
             {[
               { text: 'Dashboard', icon: <DashboardIcon /> },
-              { text: 'Fonctionnalités', icon: <PeopleIcon /> },
+              { text: 'Contributeurs', icon: <PeopleIcon /> },
               { text: 'Statistiques', icon: <BarChartIcon /> },
             ].map((item) => (
               <ListItem 
