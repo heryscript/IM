@@ -1,7 +1,10 @@
 package ia.gid.IM.service;
 
 import ia.gid.IM.entity.Contributor;
+import ia.gid.IM.entity.User;
 import ia.gid.IM.repository.ContributorRepository;
+import ia.gid.IM.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +15,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ContributorService {
     private final ContributorRepository contributorRepository;
+    private final UserRepository userRepository;
+
+    public List<Contributor> getContributorsByUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+        return contributorRepository.findByUser(user);
+    }
+
 
     public List<Contributor> findAll() {
         return contributorRepository.findAll();
