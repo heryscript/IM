@@ -11,7 +11,17 @@ function CardDashboard() {
   });
 
   useEffect(() => {
+<<<<<<< HEAD
     handleFetchUsers();
+=======
+    axios.get('/api/users/utilisateurs')
+    .then((response) => {
+      setData(response.data);
+    })
+    .catch((error) => {
+      console.log("erreur lors du chargement des données : ", error);
+    });
+>>>>>>> 24f4791a3aea2d5044c11421c1bdb84f44ebce99
   }, []);
 
   const handleFetchUsers = async() =>{

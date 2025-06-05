@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { AppBar, Button, Toolbar, Typography} from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -23,13 +24,31 @@ const Header = () => {
   return (
     <AppBar position="static" sx={{ backgroundColor: '#1976d2' }}>
         <Toolbar>
-            <Typography
-                variant="h6"
-                component="div"
-                onClick={() => navigate('/')}
-                sx={{ flexGrow: 1, cursor: 'pointer' }}>
-                    Youdentity
-            </Typography>
+                  <motion.div
+          onClick={() => navigate('/')}
+          style={{ flexGrow: 1, cursor: 'pointer' }}
+          animate={{ scale: [1, 1.02, 1], color: ['#fff', '#e3f2fd', '#fff'] }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            repeatType: 'loop',
+            ease: 'easeInOut'
+          }}
+        >
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              fontFamily: "'Orbitron', sans-serif",
+              fontWeight: 600,
+              letterSpacing: '1px',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+              display: 'inline-block',
+            }}
+          >
+            You<span style={{ color: '#f50057' }}>dentity</span>
+          </Typography>
+        </motion.div>
             {isAuthenticated && !isLoginPage &&(
               <Button variant="contained" onClick={handleLogout}>Se déconnecter</Button>
             )}
